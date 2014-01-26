@@ -1,6 +1,6 @@
 # JraInfo
 
-CLI application to see horse racing entries and odds provided by [JRA](http://www.jra.go.jp)
+CLI application to see the entry lists of horseracing and its odds that provided by [JRA](http://www.jra.go.jp)
 
 ## Installation
 
@@ -101,7 +101,7 @@ You can see the entry and win odds. Okey, press 1 to see quinella odds.
 
 That's all.
 
-You can run it with args to get same the result as above.
+You can run it with args to get the same result as above.
 
      $ bundle exec bin/jra_info 5 11 1
 
@@ -110,6 +110,10 @@ TBD
 ## Limitations
 
 * Not implemented trio(3連複) and trifecta(3連単)
+
+## Tasks
+
+Refactoring. It's very dirty code because I'm new to ruby language...
 
 ## Contributing
 
