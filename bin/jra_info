@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'jra_info'
+
+JraInfo.run(ARGV)
