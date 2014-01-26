@@ -1,7 +1,6 @@
+# encoding: utf-8
+
 require "jra_info/version"
-
-
-
 require 'open-uri'
 require 'net/http'
 require 'uri'
