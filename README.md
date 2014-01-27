@@ -113,16 +113,8 @@ TBD
 
 ## Tasks
 
-Refactoring. It's very dirty code because I'm new to ruby language...
-
-## Contributing
-
-1. Fork it (https://github.com/pot8os/jra_info/fork)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Refactoring. It's a very dirty code because I'm new to ruby language.
 
 ## License
 
-MIT License
+[MIT License](http://pot8os.net/LICENSE.txt)
