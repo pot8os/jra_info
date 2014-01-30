@@ -83,9 +83,9 @@ module JraInfo
     end
 
     def create_third_link(doc)
-      print "#" + doc.css('.subTitle').text + "\n"
-      print "#" + doc.css('.kyosoMei').text + " " + doc.css('.kyosoJoken span').text.gsub(/\s/,'') + "\n"
-      print "#" + "-" * 60 + "\n"
+      puts "#" + doc.css('.subTitle').text
+      puts "#" + doc.css('.kyosoMei').text + " " + doc.css('.kyosoJoken span').text.gsub(/\s/,'')
+      puts "#" + "-" * 60
       if @argv[0] == nil || @argv[0] == "q"
         id = 0
         doc.css('.denTable tr').each do |horse_row|
@@ -98,14 +98,18 @@ module JraInfo
               print node.next.text.gsub(/\s/,'').gsub(/[\(\)]/,'').rjust(4)
               print " "+node.text.mb_ljust(14)
             end
-            print horse.css('.tanOz').text.gsub(/(\(.*\))/,'').rjust(6)
-            print "\n"
+            puts horse.css('.tanOz').text.gsub(/(\(.*\))/,'').rjust(6)
           end
           id += 1
         end
       end
       buttons = doc.css('.shutubahyoToBtnArea a')
-      return get_odds_selector(get_contents(get_param(buttons[buttons.length-1]),'O'))
+      if buttons.length > 1
+        return get_odds_selector(get_contents(get_param(buttons[buttons.length-1]),'O'))
+      else
+        puts "# No odds information. Exit."
+        exit
+      end
     end
 
     def get_odds_selector(doc)
@@ -121,40 +125,40 @@ module JraInfo
     end
 
     def create_bracket_quinella_odds(doc)
-      print "#枠連オッズ\n#"+"-"*10+"\n"
+      puts "#枠連オッズ\n#"+"-"*10
       jiku = nil
       doc.css('.ozWakuInTable tr').each do |odds|
         if odds.children.length == 2
           jiku = odds.css('th').text
         else
-          print (jiku+"-"+odds.css('th').text).ljust(5)+odds.css('.tdoz').text+"\n"
+          puts (jiku+"-"+odds.css('th').text).ljust(5)+odds.css('.tdoz').text
         end
       end
     end
 
     def create_quinella_odds(doc)
-      print "#馬連オッズ\n#"+"-"*10+"\n"
+      puts "#馬連オッズ\n#" + "-" * 10
       doc.css('.ozUmaInTable tr').each do |odds|
         if odds.children.length == 4
-          print odds.css('.kumiNo').text.ljust(6)+odds.css('.oz').text+"\n"
+          puts odds.css('.kumiNo').text.ljust(6)+odds.css('.oz').text
         end
       end
     end
 
     def create_quinella_place_odds(doc)
-      print "#ワイドオッズ\n"+"-"*10+"\n"
+      puts "#ワイドオッズ\n" + "-" * 10
       doc.css('.ozWideInTable tr').each do |odds|
         if odds.children.length == 6
-          print odds.css('.kumiNo').text.ljust(6)+odds.css('.wideMin').text+" - "+odds.css('.wideMax').text+"\n"
+          puts odds.css('.kumiNo').text.ljust(6)+odds.css('.wideMin').text+" - "+odds.css('.wideMax').text
         end
       end
     end
 
     def create_exacta_odds(doc)
-      print "#馬単オッズ\n#"+"-"*15+"\n"
+      puts "#馬単オッズ\n#" + "-" * 15
       doc.css('.ozUmaInTable tr').each do |odds|
         if odds.children.length == 4
-          print odds.css('.kumiNo').text.ljust(6)+odds.css('.oz').text+"\n"
+          puts odds.css('.kumiNo').text.ljust(6)+odds.css('.oz').text
         end
       end
     end
@@ -166,18 +170,17 @@ module JraInfo
       return arg.to_i
     end
 
-
-
     def execute
       map = create_first_link(get_contents('sw01dli00/80','D'))
       input = @argv.shift 
       if input == nil
-        print "#num| race course\n"
-        print "#---+"+"-"*20+"\n"
+        puts "#num| race course"
+        puts "#---+" + "-" * 20
         map.each do |k, v|
-          print k.to_s.rjust(4) + "| " + v[:course] + "\n"
+          puts k.to_s.rjust(4) + "| " + v[:course]
         end
-        print "# press a number to select a race course or 'q' to exit\n#> "
+        puts "# press a number to select a race course or 'q' to exit"
+        print "# > "
         input = STDIN.gets.chomp
       end
       select_key = evaluate_arg(input)
@@ -185,12 +188,13 @@ module JraInfo
       map = create_second_link(get_contents(map[select_key][:param],'P'))
       input = @argv.shift
       if input == nil
-        print "#num| races (" + course +")\n"
-        print "#---+"+"-"*20+"\n"
+        puts "#num| races (" + course +")"
+        puts "#---+" + "-" * 20
         map.each do |k, v|
-          print k.to_s.rjust(4) + "| " + v[:no].rjust(3) + v[:time].rjust(6) + " " + v[:name] + " " + v[:condition] + "\n"
+          puts k.to_s.rjust(4) + "| " + v[:no].rjust(3) + v[:time].rjust(6) + " " + v[:name] + " " + v[:condition]
         end
-        print "# press a number to see entries or 'q' to exit\n#> "
+        puts "# press a number to see entries or 'q' to exit"
+        print "# > "
         input = STDIN.gets.chomp
       end
       select_key = evaluate_arg(input)
@@ -198,12 +202,13 @@ module JraInfo
       map = create_third_link(get_contents(map[select_key][:param],'D'))
       input = @argv.shift
       if input == nil
-        print "#num| bet type\n"
-        print "#---+"+"-"*20+"\n"
+        puts "#num| bet type"
+        puts "#---+" + "-" * 20
         map.each do |k, v|
-          print "#"+k.to_s.rjust(3) + "| " + v[:type] + "\n"
+          puts "#"+k.to_s.rjust(3) + "| " + v[:type]
         end
-        print "# press a number to see odds or press 'q' to exit\n#> "
+        puts "# press a number to see odds or press 'q' to exit"
+        print "# > "
         input = STDIN.gets.chomp
       end
       select_key = evaluate_arg(input)
