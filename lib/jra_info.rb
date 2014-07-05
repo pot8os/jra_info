@@ -199,7 +199,7 @@ module JraInfo
         jiku = n.css('tr')[0].text.clean
         n.css('th.thubn').each do |m|
           if jiku != m.text
-            puts " " + (jiku + " > " + m.text).ljust(8) + m.parent.css('.tdoz')[0].text.rjust(6)
+            puts " " + (jiku + ">" + m.text).ljust(6) + m.parent.css('.tdoz')[0].text.rjust(6)
           end
         end
       end
@@ -225,13 +225,13 @@ module JraInfo
         third_array = n.css('table.oddsTbl')
         second_array.each_with_index { |second, i|
           third_array[i].css('.ubn3').each do |m|
-            pair = first + " > " + second.text.clean + " > " + m.text.clean
+            pair = first + ">" + second.text.clean + ">" + m.text.clean
             odds = m.parent.css('td')[0].text.clean
             if odds == "票数なし"
               odds = "0"
             end
             if odds != "---"
-              puts " " + pair.ljust(13) + odds.rjust(8)
+              puts " " + pair.ljust(9) + odds.rjust(8)
             end
           end
         }
